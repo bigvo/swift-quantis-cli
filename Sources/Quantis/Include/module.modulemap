@@ -1,0 +1,4 @@
+module Quantis {
+    header "Quantis.h"
+    export *
+}
