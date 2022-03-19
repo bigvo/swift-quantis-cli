@@ -1,3 +1,3 @@
-# Test1
+# Swift-Quantis-CLI
 
 A description of this package.
