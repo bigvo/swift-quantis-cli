@@ -10,8 +10,9 @@ import Quantis
 
 var quantisDeviceType = QuantisDeviceType(0)
 var quantisError = QuantisError(0)
+var quantisCount = QuantisCount(quantisDeviceType)
 
-//func quantisPciGetDriverVersion() -> Int {
-//    var result =
-//    return result
-//}
+public func quantisCount(quantisDeviceType: Int) -> Int {
+    return quantisCount(quantisDeviceType: quantisDeviceType)
+}
+
