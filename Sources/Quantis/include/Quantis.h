@@ -57,7 +57,7 @@
 #include <stddef.h>
 #endif
 
-#include "DllMain.h"
+#include "../DllMain.h"
 
 #ifdef __cplusplus
 extern "C"
