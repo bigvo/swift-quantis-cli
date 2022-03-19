@@ -1,4 +1,4 @@
 module Quantis {
-    header "Quantis.h"
+    umbrella header "Quantis.h"
     export *
 }
