@@ -53,7 +53,7 @@
 #include <string.h>
 
 #include "Conversion.h"
-#include "include/Quantis.h"
+#include "Quantis.h"
 #include "Quantis_Internal.h"
 
 /* Internal variable to store serial number */

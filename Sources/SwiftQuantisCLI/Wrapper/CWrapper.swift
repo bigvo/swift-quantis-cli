@@ -8,11 +8,17 @@
 import Foundation
 import Quantis
 
-var quantisDeviceType = QuantisDeviceType(0)
-var quantisError = QuantisError(0)
-var quantisCount = QuantisCount(quantisDeviceType)
 
-public func quantisCount(quantisDeviceType: Int) -> Int {
-    return quantisCount(quantisDeviceType: quantisDeviceType)
+var quantisError = QuantisError.self
+//var quantisCount = QuantisCount(quantisDeviceType)
+enum device: Int {
+    case QUANTIS_DEVICE_PCI = 1
+    case QUANTIS_DEVICE_USB = 2
+}
+
+
+public func quantisCount(device: UInt32) -> Int32 {
+    let count = QuantisCount(QuantisDeviceType(device))
+    return count
 }
 

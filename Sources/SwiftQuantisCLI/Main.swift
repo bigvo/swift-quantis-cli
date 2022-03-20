@@ -14,6 +14,7 @@ struct QuantisCLI: ParsableCommand {
     var test: Int
     
     mutating func run() throws {
-        print(quantisCount(quantisDeviceType: test))
+        //        var test32: UInt32 = test
+        print(quantisCount(device: UInt32(test)))
     }
 }

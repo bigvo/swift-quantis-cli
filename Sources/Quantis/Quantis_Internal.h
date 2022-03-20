@@ -51,6 +51,13 @@
 #ifndef QUANTIS_INTERNAL_H
 #define QUANTIS_INTERNAL_H
 
+
+// #ifndef _WIN32
+///* On Windows DISABLE_QUANTIS_JAVA is provided by the compiler */
+//#include "QuantisLibConfig.h"
+//#endif
+
+
 #ifdef __cplusplus
 #include <cstddef>
 #else
