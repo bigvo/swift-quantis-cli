@@ -1,6 +1,6 @@
 # Swift-Quantis-CLI
 
-A simple wrapper for id Quantique Quantis: Quantum Random Number Generator.
+A simple Swift C wrapper for id Quantique Quantis: Quantum Random Number Generator.
 
 ## Requirements:
 System: Unix, Library: libusb-1.0
