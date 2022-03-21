@@ -2,14 +2,13 @@
 
 A simple wrapper for id Quantique Quantis: Quantum Random Number Generator.
 
-Requirements: 
-System: Unix
-Library: libusb-1.0
+## Requirements:
+System: Unix, Library: libusb-1.0
 
-Compile providing required flag to Swift Linker:
-swift build -Xlinker -lusb-1.0
+Compile providing required flag to Swift Linker: swift build -Xlinker -lusb-1.0
 
-# CLI Commands
+## CLI Commands
+```
   -i, --info              Print all cards info
   --roll                  Roll from 1 to 100, like in WoW.
                           Optionally Device Number and Device Type can be passed.
@@ -19,8 +18,11 @@ swift build -Xlinker -lusb-1.0
   -t <t>                  Device Type: 1 - PCI-E, 2  - USB
   -n <n>                  Device Number
   -h, --help              Show help information.
+```
 
-# Example
+## Example
+```
 --roll -t 2 -n 0
 --jackpot
 --coinflip -t 1 -n 1
+```
