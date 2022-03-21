@@ -2,7 +2,9 @@
 
 A simple wrapper for id Quantique Quantis: Quantum Random Number Generator.
 
-Requirements: libusb-1.0
+Requirements: 
+System: Unix
+Library: libusb-1.0
 
 Compile providing required flag to Swift Linker:
 swift build -Xlinker -lusb-1.0
