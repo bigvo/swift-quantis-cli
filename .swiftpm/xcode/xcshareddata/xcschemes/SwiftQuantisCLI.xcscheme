@@ -14,9 +14,37 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Swift-Quantis-CLI"
-               BuildableName = "Swift-Quantis-CLI"
-               BlueprintName = "Swift-Quantis-CLI"
+               BlueprintIdentifier = "SwiftQuantisCLI"
+               BuildableName = "SwiftQuantisCLI"
+               BlueprintName = "SwiftQuantisCLI"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Quantis"
+               BuildableName = "Quantis"
+               BlueprintName = "Quantis"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "libusb"
+               BuildableName = "libusb"
+               BlueprintName = "libusb"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -40,6 +68,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "SwiftQuantisCLI"
+            BuildableName = "SwiftQuantisCLI"
+            BlueprintName = "SwiftQuantisCLI"
+            ReferencedContainer = "container:">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -50,9 +88,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "Swift-Quantis-CLI"
-            BuildableName = "Swift-Quantis-CLI"
-            BlueprintName = "Swift-Quantis-CLI"
+            BlueprintIdentifier = "SwiftQuantisCLI"
+            BuildableName = "SwiftQuantisCLI"
+            BlueprintName = "SwiftQuantisCLI"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
