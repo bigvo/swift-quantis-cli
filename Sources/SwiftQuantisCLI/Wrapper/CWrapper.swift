@@ -36,7 +36,7 @@ public func printAllCards() {
                 let serialNumber = String(cString: (QuantisGetSerialNumber(QuantisDeviceType(device), UInt32(deviceNumber))))
                 let manufacturer = String(cString: (QuantisGetManufacturer(QuantisDeviceType(device), UInt32(deviceNumber))))
                 
-                print("     Details for device #\(deviceNumber)")
+                print("     - Details for device #\(deviceNumber)")
                 print("      core version: \(boardVersion)")
                 print("      serial number: \(serialNumber)")
                 print("      manufacturer: \(manufacturer)")
