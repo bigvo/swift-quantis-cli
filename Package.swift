@@ -18,7 +18,9 @@ let package = Package(
         .executableTarget(name: "SwiftQuantisCLI", dependencies: [
             "Quantis",
             .product(name: "ArgumentParser", package: "swift-argument-parser"),
-        ]),
-
+        ],
+                          linkerSettings: [
+                            LinkerSetting.unsafeFlags(["-Xlinker", "-lusb-1.0"])
+                          ]),
     ]
 )
