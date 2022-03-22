@@ -76,7 +76,6 @@ public func jackpot(deviceType: QuantisDeviceType, deviceNumber: UInt32) -> Doub
         pointer.deinitialize(count: Int(max))
         pointer.deallocate()
     }
-    
     return Double(pointer.pointee).round(to: 2)
 }
 
@@ -89,6 +88,25 @@ public func coinflip(deviceType: QuantisDeviceType, deviceNumber: UInt32) -> Int
         pointer.deinitialize(count: Int(max))
         pointer.deallocate()
     }
-    
     return pointer.pointee
+}
+
+public func quantisReadScaledInt(deviceType: QuantisDeviceType, deviceNumber: UInt32, min: Int32, max: Int32) -> Int32 {
+    let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: Int(max))
+    let _ = QuantisReadScaledInt(deviceType, deviceNumber, pointer, min, max)
+    defer {
+        pointer.deinitialize(count: Int(max))
+        pointer.deallocate()
+    }
+    return pointer.pointee
+}
+
+public func quantisReadScaledDouble(deviceType: QuantisDeviceType, deviceNumber: UInt32, min: Double, max: Double) -> Double {
+    let pointer = UnsafeMutablePointer<Double>.allocate(capacity: Int(max))
+    let _ = QuantisReadScaledDouble(deviceType, deviceNumber, pointer, min, max)
+    defer {
+        pointer.deinitialize(count: Int(max))
+        pointer.deallocate()
+    }
+    return Double(pointer.pointee).round(to: 2)
 }
