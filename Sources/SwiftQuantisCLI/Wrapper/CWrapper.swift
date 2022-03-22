@@ -44,7 +44,34 @@ public func printAllCards() {
         }
     }
     
-    print("Swift Quantis CLI - Displaying devices info:\n")
+    print("""
+                                                     '`.
+                          .l<>>!:'               .;>~<>+<'
+                         .__^`^;>+<:           ^>_>,'  .-_
+                         '[:      :<_!'      ^<_l.      ![.
+                        `i]-~I      `i-i'  '<-I         ~-
+                       ']]]]]]<       '>-;;-i.         .]!
+                       .+]]]]]l         ;[[i           i].
+                         ,l>[;         ;_;^+>.        `[I
+                            ~?^^,,:;;;<[+Il![]l:;;:,"`-_
+                     `,I!><<<-]>!!lI![+,,:::";][lI!!!]]<<<>i;I><i,
+                 ^l<~<iI,^'. .++   `-i        .~+.  I]^ .'`I[]]]]]>
+               `<_l".         ._-.,[!           i[,I[,     .-]]]]]__:
+               +]               >-];             :[],       .I>>l^ i['
+               `~+l^            ,][,             l]]!           .,<_;
+                 "!<~>!;,`.    "]:^-!           i-''?i   .`^:l>~~>;.
+                    .^:li><<<>i]]I;i]_,",,,,,,,+[iIl~]~><<<>!;"'
+                           .'`]_":;;;i]?ll!!I+]<;;;:":[!
+                             l]'      ^~<'  l-;       I[^
+                            '[l         l-i~+`         +-
+                            i]           <]]I          `[I
+                            ?>    `i+_~!_<.`~_I.        +_
+                           .[I   .?]]]]]_    ^<_i^      i[
+                            -+   '-]]]]]l      'l~~!,`'"]<
+                            `+~i<~>;Il;`          ^Ii<<<I
+                              '^` \n
+            Swift Quantis CLI - Displaying devices info:\n
+            """)
     
     print(" Searching for PCI-E devices...")
     printInfo(device: 1)
@@ -68,8 +95,8 @@ public func roll(deviceType: QuantisDeviceType, deviceNumber: UInt32) -> Int32 {
 }
 
 public func jackpot(deviceType: QuantisDeviceType, deviceNumber: UInt32) -> Double {
-    let min: Double = 0.0
-    let max: Double = 100.0
+    let min: Double = 0.01
+    let max: Double = 100.00
     let pointer = UnsafeMutablePointer<Double>.allocate(capacity: Int(max))
     let _ = QuantisReadScaledDouble(deviceType, deviceNumber, pointer, min, max)
     defer {
