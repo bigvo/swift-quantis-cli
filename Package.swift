@@ -5,8 +5,8 @@ import PackageDescription
 
 let package = Package(
     name: "swift-quantis-cli",
-    platforms: [
-        .macOS(.v12)
+    products: [
+        .library(name: "Swift-Quantis-CLI", targets: ["SwiftQuantisCLI"])
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.0"),
