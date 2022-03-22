@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftQuantisCLI",
+    name: "swift-quantis-cli",
     platforms: [
         .macOS(.v12)
     ],
