@@ -8,6 +8,7 @@
 import Foundation
 import ArgumentParser
 import Quantis
+import SwiftQuantis
 
 @main
 struct QuantisCLI: ParsableCommand {
