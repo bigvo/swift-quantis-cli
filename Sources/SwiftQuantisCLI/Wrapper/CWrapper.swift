@@ -118,12 +118,28 @@ public func coinflip(deviceType: QuantisDeviceType, deviceNumber: UInt32) -> Int
     return pointer.pointee
 }
 
+public func wheel(deviceType: QuantisDeviceType, deviceNumber: UInt32) -> Double {
+    let min: Double = 1.00
+    let max: Double = 25.99
+    let pointer = UnsafeMutablePointer<Double>.allocate(capacity: Int(max))
+    let _ = QuantisReadScaledDouble(deviceType, deviceNumber, pointer, min, max)
+    defer {
+        pointer.deinitialize(count: Int(max))
+        pointer.deallocate()
+    }
+    return Double(pointer.pointee).round(to: 2)
+}
+
 public func quantisReadScaledInt(deviceType: QuantisDeviceType, deviceNumber: UInt32, min: Int32, max: Int32) -> Int32 {
     let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: Int(max))
     let _ = QuantisReadScaledInt(deviceType, deviceNumber, pointer, min, max)
     defer {
         pointer.deinitialize(count: Int(max))
         pointer.deallocate()
+    }
+    // If not check for min > max device gets in error state and stop working.
+    if min > max {
+        return Int32(0)
     }
     return pointer.pointee
 }
@@ -134,6 +150,10 @@ public func quantisReadScaledDouble(deviceType: QuantisDeviceType, deviceNumber:
     defer {
         pointer.deinitialize(count: Int(max))
         pointer.deallocate()
+    }
+    // If not check for min > max device gets in error state and stop working.
+    if min > max {
+        return 0.00
     }
     return Double(pointer.pointee).round(to: 2)
 }

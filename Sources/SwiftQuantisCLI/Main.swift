@@ -34,6 +34,30 @@ struct QuantisCLI: ParsableCommand {
             """)
     var makeFlip: Bool = false
     
+    @Flag(name: [.customLong("wheel")], help:
+            """
+            Roll a wheel, result from 1.00 to 25.99
+            """)
+    var rollWheel: Bool = false
+    
+    @Flag(name: [.customLong("randomint")], help:
+            """
+            Random number, from -min to -max, if no value provided, default: 1 to 10 will be used
+            """)
+    var randomInt: Bool = false
+    
+    @Flag(name: [.customLong("randomdouble")], help:
+            """
+            Random double, from -min to -max, if no value provided, default: 1.00 to 10.00 will be used
+            """)
+    var randomDouble: Bool = false
+    
+    @Option(name: .long, help: "From minimal number")
+    var min: Double?
+    
+    @Option(name: .long, help: "To maximum number")
+    var max: Double?
+    
     @Option(name: .short, help: "Device Type: 1 - PCI-E, 2  - USB")
     var type: UInt32?
     
@@ -55,6 +79,28 @@ struct QuantisCLI: ParsableCommand {
         
         if makeFlip {
             print(coinflip(deviceType: QuantisDeviceType(type ?? 2), deviceNumber: number ?? 0))
+        }
+        
+        if rollWheel {
+            print(wheel(deviceType: QuantisDeviceType(type ?? 2), deviceNumber: number ?? 0))
+        }
+        
+        if randomInt {
+            print(quantisReadScaledInt(
+                deviceType: QuantisDeviceType(type ?? 2),
+                deviceNumber: number ?? 0,
+                min: Int32(min ?? 1),
+                max: Int32(max ?? 10)
+            ))
+        }
+        
+        if randomDouble {
+            print(quantisReadScaledDouble(
+                deviceType: QuantisDeviceType(type ?? 2),
+                deviceNumber: number ?? 0,
+                min: min ?? 1.00,
+                max: max ?? 10.00
+            ))
         }
     }
 }
