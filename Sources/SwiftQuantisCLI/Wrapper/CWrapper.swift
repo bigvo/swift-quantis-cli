@@ -91,6 +91,10 @@ public func roll(deviceType: QuantisDeviceType, deviceNumber: UInt32) -> Int32 {
         pointer.deallocate()
     }
     
+    if pointer.pointee < min || pointer.pointee > max {
+        return 0
+    }
+    
     return pointer.pointee
 }
 
@@ -102,6 +106,10 @@ public func jackpot(deviceType: QuantisDeviceType, deviceNumber: UInt32) -> Doub
     defer {
         pointer.deinitialize(count: Int(max))
         pointer.deallocate()
+    }
+    
+    if pointer.pointee < min || pointer.pointee > max {
+        return 0
     }
     return Double(pointer.pointee).round(to: 2)
 }
@@ -115,6 +123,10 @@ public func coinflip(deviceType: QuantisDeviceType, deviceNumber: UInt32) -> Int
         pointer.deinitialize(count: Int(max))
         pointer.deallocate()
     }
+    
+    if pointer.pointee < min || pointer.pointee > max {
+        return 0
+    }
     return pointer.pointee
 }
 
@@ -126,6 +138,10 @@ public func wheel(deviceType: QuantisDeviceType, deviceNumber: UInt32) -> Double
     defer {
         pointer.deinitialize(count: Int(max))
         pointer.deallocate()
+    }
+    
+    if pointer.pointee < min || pointer.pointee > max {
+        return 0
     }
     return Double(pointer.pointee).round(to: 2)
 }
@@ -141,6 +157,10 @@ public func quantisReadScaledInt(deviceType: QuantisDeviceType, deviceNumber: UI
     if min > max {
         return Int32(0)
     }
+    
+    if pointer.pointee < min || pointer.pointee > max {
+        return 0
+    }
     return pointer.pointee
 }
 
@@ -154,6 +174,10 @@ public func quantisReadScaledDouble(deviceType: QuantisDeviceType, deviceNumber:
     // If not check for min > max device gets in error state and stop working.
     if min > max {
         return 0.00
+    }
+    
+    if pointer.pointee < min || pointer.pointee > max {
+        return 0
     }
     return Double(pointer.pointee).round(to: 2)
 }
