@@ -7,7 +7,6 @@
 
 import Foundation
 import ArgumentParser
-import Quantis
 import SwiftQuantis
 
 @main
@@ -67,12 +66,12 @@ struct QuantisCLI: ParsableCommand {
     
     mutating func run() throws {
         if info {
-            printAllCards()
+            Quantis.printAllCards()
         }
         
         if makeRoll {
             do {
-                try print(roll(deviceType: QuantisDeviceType(type ?? 2), deviceNumber: number ?? 0))
+                try print(Quantis.roll(deviceType: QuantisDevice(type ?? 2), deviceNumber: number ?? 0))
             } catch {
                 print(error)
                 fatalError()
@@ -81,7 +80,7 @@ struct QuantisCLI: ParsableCommand {
         
         if rollJackpot {
             do {
-                try print(jackpot(deviceType: QuantisDeviceType(type ?? 2), deviceNumber: number ?? 0))
+                try print(Quantis.jackpot(deviceType: QuantisDevice(type ?? 2), deviceNumber: number ?? 0))
             } catch {
                 print(error)
                 fatalError()
@@ -90,7 +89,7 @@ struct QuantisCLI: ParsableCommand {
         
         if makeFlip {
             do {
-                try print(coinflip(deviceType: QuantisDeviceType(type ?? 2), deviceNumber: number ?? 0))
+                try print(Quantis.coinflip(deviceType: QuantisDevice(type ?? 2), deviceNumber: number ?? 0))
             } catch {
                 print(error)
                 fatalError()
@@ -99,7 +98,7 @@ struct QuantisCLI: ParsableCommand {
         
         if rollWheel {
             do {
-                try print(wheel(deviceType: QuantisDeviceType(type ?? 2), deviceNumber: number ?? 0))
+                try print(Quantis.wheel(deviceType: QuantisDevice(type ?? 2), deviceNumber: number ?? 0))
             } catch {
                 print(error)
                 fatalError()
@@ -108,8 +107,8 @@ struct QuantisCLI: ParsableCommand {
         
         if randomInt {
             do {
-                try print(quantisReadScaledInt(
-                    deviceType: QuantisDeviceType(type ?? 2),
+                try print(Quantis.quantisReadScaledInt(
+                    deviceType: QuantisDevice(type ?? 2),
                     deviceNumber: number ?? 0,
                     min: Int32(min ?? 1),
                     max: Int32(max ?? 10)))
@@ -121,8 +120,8 @@ struct QuantisCLI: ParsableCommand {
         
         if randomDouble {
             do {
-                try print(quantisReadScaledDouble(
-                    deviceType: QuantisDeviceType(type ?? 2),
+                try print(Quantis.quantisReadScaledDouble(
+                    deviceType: QuantisDevice(type ?? 2),
                     deviceNumber: number ?? 0,
                     min: min ?? 1.00,
                     max: max ?? 10.00

@@ -13,12 +13,12 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.0"),
     ],
     targets: [
-        .target(name: "Quantis", path: "./Sources/Quantis"),
+        .target(name: "СQuantis", path: "./Sources/СQuantis"),
         .target(name: "SwiftQuantis", dependencies: [
-            "Quantis",
+            "СQuantis",
         ]),
         .executableTarget(name: "SwiftQuantisCLI", dependencies: [
-            "Quantis",
+            "СQuantis",
             "SwiftQuantis",
             .product(name: "ArgumentParser", package: "swift-argument-parser"),
         ]),
