@@ -13,3 +13,9 @@ extension Double {
         return (self * divisor).rounded() / divisor
     }
 }
+
+enum QuantisError: Error {
+    case noResult
+    case deviceError
+    case invalidParameters
+}

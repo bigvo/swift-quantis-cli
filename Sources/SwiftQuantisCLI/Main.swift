@@ -71,37 +71,66 @@ struct QuantisCLI: ParsableCommand {
         }
         
         if makeRoll {
-            print(roll(deviceType: QuantisDeviceType(type ?? 2), deviceNumber: number ?? 0))
+            do {
+                try print(roll(deviceType: QuantisDeviceType(type ?? 2), deviceNumber: number ?? 0))
+            } catch {
+                print(error)
+                fatalError()
+            }
         }
         
         if rollJackpot {
-            print(jackpot(deviceType: QuantisDeviceType(type ?? 2), deviceNumber: number ?? 0))
+            do {
+                try print(jackpot(deviceType: QuantisDeviceType(type ?? 2), deviceNumber: number ?? 0))
+            } catch {
+                print(error)
+                fatalError()
+            }
         }
         
         if makeFlip {
-            print(coinflip(deviceType: QuantisDeviceType(type ?? 2), deviceNumber: number ?? 0))
+            do {
+                try print(coinflip(deviceType: QuantisDeviceType(type ?? 2), deviceNumber: number ?? 0))
+            } catch {
+                print(error)
+                fatalError()
+            }
         }
         
         if rollWheel {
-            print(wheel(deviceType: QuantisDeviceType(type ?? 2), deviceNumber: number ?? 0))
+            do {
+                try print(wheel(deviceType: QuantisDeviceType(type ?? 2), deviceNumber: number ?? 0))
+            } catch {
+                print(error)
+                fatalError()
+            }
         }
         
         if randomInt {
-            print(quantisReadScaledInt(
-                deviceType: QuantisDeviceType(type ?? 2),
-                deviceNumber: number ?? 0,
-                min: Int32(min ?? 1),
-                max: Int32(max ?? 10)
-            ))
+            do {
+                try print(quantisReadScaledInt(
+                    deviceType: QuantisDeviceType(type ?? 2),
+                    deviceNumber: number ?? 0,
+                    min: Int32(min ?? 1),
+                    max: Int32(max ?? 10)))
+            } catch {
+                print(error)
+                fatalError()
+            }
         }
         
         if randomDouble {
-            print(quantisReadScaledDouble(
-                deviceType: QuantisDeviceType(type ?? 2),
-                deviceNumber: number ?? 0,
-                min: min ?? 1.00,
-                max: max ?? 10.00
-            ))
+            do {
+                try print(quantisReadScaledDouble(
+                    deviceType: QuantisDeviceType(type ?? 2),
+                    deviceNumber: number ?? 0,
+                    min: min ?? 1.00,
+                    max: max ?? 10.00
+                ))
+            } catch {
+                print(error)
+                fatalError()
+            }
         }
     }
 }

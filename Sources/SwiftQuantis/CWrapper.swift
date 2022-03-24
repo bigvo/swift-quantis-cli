@@ -81,103 +81,146 @@ public func printAllCards() {
     printInfo(device: 2)
 }
 
-public func roll(deviceType: QuantisDeviceType, deviceNumber: UInt32) -> Int32 {
+public func roll(deviceType: QuantisDeviceType, deviceNumber: UInt32) throws -> Int32 {
     let min: Int32 = 1
     let max: Int32 = 100
     let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: Int(max))
-    let _ = QuantisReadScaledInt(deviceType, deviceNumber, pointer, min, max)
+    let deviceHandle = QuantisReadScaledInt(deviceType, deviceNumber, pointer, min, max)
+    
     defer {
         pointer.deinitialize(count: Int(max))
         pointer.deallocate()
     }
     
-    if pointer.pointee < min || pointer.pointee > max {
-        return 0
+    let result = pointer.pointee
+    
+    if deviceHandle != 0 {
+        throw QuantisError.deviceError
     }
     
-    return pointer.pointee
+    if result < min || result > max {
+        throw QuantisError.noResult
+    }
+    return result
 }
 
-public func jackpot(deviceType: QuantisDeviceType, deviceNumber: UInt32) -> Double {
+public func jackpot(deviceType: QuantisDeviceType, deviceNumber: UInt32) throws -> Double {
     let min: Double = 0.01
     let max: Double = 100.00
     let pointer = UnsafeMutablePointer<Double>.allocate(capacity: Int(max))
-    let _ = QuantisReadScaledDouble(deviceType, deviceNumber, pointer, min, max)
+    let deviceHandle = QuantisReadScaledDouble(deviceType, deviceNumber, pointer, min, max)
+    
     defer {
         pointer.deinitialize(count: Int(max))
         pointer.deallocate()
     }
     
-    if pointer.pointee < min || pointer.pointee > max {
-        return 0
+    let result = pointer.pointee
+    
+    if deviceHandle != 0 {
+        throw QuantisError.deviceError
     }
-    return Double(pointer.pointee).round(to: 2)
+    
+    if result < min || result > max {
+        throw QuantisError.noResult
+    }
+    return Double(result).round(to: 2)
 }
 
-public func coinflip(deviceType: QuantisDeviceType, deviceNumber: UInt32) -> Int32 {
+public func coinflip(deviceType: QuantisDeviceType, deviceNumber: UInt32) throws -> Int32 {
     let min: Int32 = 1
     let max: Int32 = 2
     let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: Int(max))
-    let _ = QuantisReadScaledInt(deviceType, deviceNumber, pointer, min, max)
+    let deviceHandle = QuantisReadScaledInt(deviceType, deviceNumber, pointer, min, max)
     defer {
         pointer.deinitialize(count: Int(max))
         pointer.deallocate()
     }
     
-    if pointer.pointee < min || pointer.pointee > max {
-        return 0
+    let result = pointer.pointee
+    
+    if deviceHandle != 0 {
+        throw QuantisError.deviceError
     }
-    return pointer.pointee
+    
+    if result < min || result > max {
+        throw QuantisError.noResult
+    }
+    return result
 }
 
-public func wheel(deviceType: QuantisDeviceType, deviceNumber: UInt32) -> Double {
+public func wheel(deviceType: QuantisDeviceType, deviceNumber: UInt32) throws -> Double {
     let min: Double = 1.00
     let max: Double = 25.99
     let pointer = UnsafeMutablePointer<Double>.allocate(capacity: Int(max))
-    let _ = QuantisReadScaledDouble(deviceType, deviceNumber, pointer, min, max)
+    
+    let deviceHandle = QuantisReadScaledDouble(deviceType, deviceNumber, pointer, min, max)
     defer {
         pointer.deinitialize(count: Int(max))
         pointer.deallocate()
     }
     
-    if pointer.pointee < min || pointer.pointee > max {
-        return 0
+    let result = pointer.pointee
+    
+    if deviceHandle != 0 {
+        throw QuantisError.deviceError
     }
-    return Double(pointer.pointee).round(to: 2)
+    
+    if result < min || result > max {
+        throw QuantisError.noResult
+    }
+    return Double(result).round(to: 2)
 }
 
-public func quantisReadScaledInt(deviceType: QuantisDeviceType, deviceNumber: UInt32, min: Int32, max: Int32) -> Int32 {
+public func quantisReadScaledInt(deviceType: QuantisDeviceType, deviceNumber: UInt32, min: Int32, max: Int32) throws -> Int32 {
     let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: Int(max))
-    let _ = QuantisReadScaledInt(deviceType, deviceNumber, pointer, min, max)
+    
+    let deviceHandle = QuantisReadScaledInt(deviceType, deviceNumber, pointer, min, max)
     defer {
         pointer.deinitialize(count: Int(max))
         pointer.deallocate()
     }
+    
     // If not check for min > max device gets in error state and stop working.
     if min > max {
-        return Int32(0)
+        throw QuantisError.invalidParameters
     }
     
-    if pointer.pointee < min || pointer.pointee > max {
-        return 0
+    let result = pointer.pointee
+
+    //Check if device is in working state.
+    if deviceHandle != 0 {
+        throw QuantisError.deviceError
     }
-    return pointer.pointee
+    
+    // Check if result is correct.
+    if result < min || result > max {
+        throw QuantisError.noResult
+    }
+    return result
 }
 
-public func quantisReadScaledDouble(deviceType: QuantisDeviceType, deviceNumber: UInt32, min: Double, max: Double) -> Double {
+public func quantisReadScaledDouble(deviceType: QuantisDeviceType, deviceNumber: UInt32, min: Double, max: Double) throws -> Double {
     let pointer = UnsafeMutablePointer<Double>.allocate(capacity: Int(max))
-    let _ = QuantisReadScaledDouble(deviceType, deviceNumber, pointer, min, max)
+    
+    let deviceHandle = QuantisReadScaledDouble(deviceType, deviceNumber, pointer, min, max)
     defer {
         pointer.deinitialize(count: Int(max))
         pointer.deallocate()
     }
     // If not check for min > max device gets in error state and stop working.
     if min > max {
-        return 0.00
+        throw QuantisError.invalidParameters
     }
     
-    if pointer.pointee < min || pointer.pointee > max {
-        return 0
+    let result = pointer.pointee
+    
+    if deviceHandle != 0 {
+        throw QuantisError.deviceError
     }
-    return Double(pointer.pointee).round(to: 2)
+    
+    if result < min || result > max {
+        throw QuantisError.noResult
+    }
+    return Double(result).round(to: 2)
 }
