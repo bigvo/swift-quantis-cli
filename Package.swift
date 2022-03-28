@@ -16,11 +16,20 @@ let package = Package(
         .target(name: "СQuantis", path: "./Sources/СQuantis"),
         .target(name: "SwiftQuantis", dependencies: [
             "СQuantis",
+            "CLibUSB",
         ]),
         .executableTarget(name: "SwiftQuantisCLI", dependencies: [
             "СQuantis",
             "SwiftQuantis",
+            "CLibUSB",
             .product(name: "ArgumentParser", package: "swift-argument-parser"),
         ]),
+        .systemLibrary(
+            name: "CLibUSB",
+            pkgConfig: "libusb-1.0",
+            providers: [
+                .brew(["libusb"]),
+                .apt(["libusb-1.0-0-dev"]),
+            ]),
     ]
 )
