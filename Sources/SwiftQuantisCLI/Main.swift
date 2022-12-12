@@ -72,11 +72,13 @@ struct QuantisCLI: ParsableCommand {
         
         if info {
             quantis.printAllCards()
+            return
         }
         
         if makeRoll {
             do {
                 try print(quantis.roll())
+                return
             } catch {
                 print(error)
                 fatalError()
@@ -86,6 +88,7 @@ struct QuantisCLI: ParsableCommand {
         if rollJackpot {
             do {
                 try print(quantis.jackpot())
+                return
             } catch {
                 print(error)
                 fatalError()
@@ -95,6 +98,7 @@ struct QuantisCLI: ParsableCommand {
         if makeFlip {
             do {
                 try print(quantis.coinflip())
+                return
             } catch {
                 print(error)
                 fatalError()
@@ -104,6 +108,7 @@ struct QuantisCLI: ParsableCommand {
         if rollWheel {
             do {
                 try print(quantis.wheel())
+                return
             } catch {
                 print(error)
                 fatalError()
@@ -117,6 +122,7 @@ struct QuantisCLI: ParsableCommand {
                         min: Int32(min ?? 1),
                         max: Int32(max ?? 10)))
                 }
+                return
             } catch {
                 print(error)
                 fatalError()
@@ -129,10 +135,12 @@ struct QuantisCLI: ParsableCommand {
                     min: min ?? 1.00,
                     max: max ?? 10.00
                 ))
+                return
             } catch {
                 print(error)
                 fatalError()
             }
         }
+        return quantis.printAllCards()
     }
 }
