@@ -11,16 +11,21 @@
 import Foundation
 import СQuantis
 
-public var Quantis: QuantisFunctions {
-    return.init()
-}
+public typealias Quantis = QuantisFunctions
 
 public typealias QuantisDevice = QuantisDeviceType
 
 public final class QuantisFunctions {
+    private var device: QuantisDevice
+    private var deviceNumber: UInt32
+
+    public init(device: QuantisDevice, deviceNumber: UInt32) {
+        self.device = device
+        self.deviceNumber = deviceNumber
+    }
     
-    public func quantisCount(device: UInt32) -> Int32 {
-        let count = QuantisCount(QuantisDevice(device))
+    public func quantisCount() -> Int32 {
+        let count = QuantisCount(device)
         return count
     }
     
@@ -89,11 +94,11 @@ public final class QuantisFunctions {
         printInfo(device: 2)
     }
     
-    public func roll(deviceType: QuantisDevice, deviceNumber: UInt32) throws -> Int32 {
+    public func roll() throws -> Int32 {
         let min: Int32 = 1
         let max: Int32 = 100
         let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: Int(max))
-        let deviceHandle = QuantisReadScaledInt(deviceType, deviceNumber, pointer, min, max)
+        let deviceHandle = QuantisReadScaledInt(device, deviceNumber, pointer, min, max)
         
         defer {
             pointer.deinitialize(count: Int(max))
@@ -114,11 +119,11 @@ public final class QuantisFunctions {
         return result
     }
     
-    public func jackpot(deviceType: QuantisDevice, deviceNumber: UInt32) throws -> Double {
+    public func jackpot() throws -> Double {
         let min: Double = 0.01
         let max: Double = 100.00
         let pointer = UnsafeMutablePointer<Double>.allocate(capacity: Int(max))
-        let deviceHandle = QuantisReadScaledDouble(deviceType, deviceNumber, pointer, min, max)
+        let deviceHandle = QuantisReadScaledDouble(device, deviceNumber, pointer, min, max)
         
         defer {
             pointer.deinitialize(count: Int(max))
@@ -137,11 +142,11 @@ public final class QuantisFunctions {
         return Double(result).round(to: 2)
     }
     
-    public func coinflip(deviceType: QuantisDevice, deviceNumber: UInt32) throws -> Int32 {
+    public func coinflip() throws -> Int32 {
         let min: Int32 = 1
         let max: Int32 = 2
         let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: Int(max))
-        let deviceHandle = QuantisReadScaledInt(deviceType, deviceNumber, pointer, min, max)
+        let deviceHandle = QuantisReadScaledInt(device, deviceNumber, pointer, min, max)
         
         defer {
             pointer.deinitialize(count: Int(max))
@@ -160,12 +165,12 @@ public final class QuantisFunctions {
         return result
     }
     
-    public func wheel(deviceType: QuantisDevice, deviceNumber: UInt32) throws -> Double {
+    public func wheel() throws -> Double {
         let min: Double = 1.00
         let max: Double = 25.99
         let pointer = UnsafeMutablePointer<Double>.allocate(capacity: Int(max))
         
-        let deviceHandle = QuantisReadScaledDouble(deviceType, deviceNumber, pointer, min, max)
+        let deviceHandle = QuantisReadScaledDouble(device, deviceNumber, pointer, min, max)
         
         defer {
             pointer.deinitialize(count: Int(max))
@@ -184,10 +189,10 @@ public final class QuantisFunctions {
         return Double(result).round(to: 2)
     }
     
-    public func quantisReadScaledInt(deviceType: QuantisDevice, deviceNumber: UInt32, min: Int32, max: Int32) throws -> Int32 {
+    public func quantisReadScaledInt(min: Int32, max: Int32) throws -> Int32 {
         let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: Int(max))
         
-        let deviceHandle = QuantisReadScaledInt(deviceType, deviceNumber, pointer, min, max)
+        let deviceHandle = QuantisReadScaledInt(device, deviceNumber, pointer, min, max)
         defer {
             pointer.deinitialize(count: Int(max))
             pointer.deallocate()
@@ -210,10 +215,10 @@ public final class QuantisFunctions {
         return result
     }
     
-    public func quantisReadScaledDouble(deviceType: QuantisDevice, deviceNumber: UInt32, min: Double, max: Double) throws -> Double {
+    public func quantisReadScaledDouble(min: Double, max: Double) throws -> Double {
         let pointer = UnsafeMutablePointer<Double>.allocate(capacity: Int(max))
         
-        let deviceHandle = QuantisReadScaledDouble(deviceType, deviceNumber, pointer, min, max)
+        let deviceHandle = QuantisReadScaledDouble(device, deviceNumber, pointer, min, max)
         defer {
             pointer.deinitialize(count: Int(max))
             pointer.deallocate()
