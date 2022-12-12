@@ -58,6 +58,9 @@ struct QuantisCLI: ParsableCommand {
     @Option(name: .long, help: "To maximum number")
     var max: Double?
     
+    @Option(name: .short, help: "How many numbers generate")
+    var count: Int?
+    
     @Option(name: .short, help: "Device Type: 1 - PCI-E, 2  - USB")
     var type: UInt32?
     
@@ -107,11 +110,13 @@ struct QuantisCLI: ParsableCommand {
         
         if randomInt {
             do {
-                try print(Quantis.quantisReadScaledInt(
-                    deviceType: QuantisDevice(type ?? 2),
-                    deviceNumber: number ?? 0,
-                    min: Int32(min ?? 1),
-                    max: Int32(max ?? 10)))
+                for _ in 1...(count ?? 1) {
+                    try print(Quantis.quantisReadScaledInt(
+                        deviceType: QuantisDevice(type ?? 2),
+                        deviceNumber: number ?? 0,
+                        min: Int32(min ?? 1),
+                        max: Int32(max ?? 10)))
+                }
             } catch {
                 print(error)
                 fatalError()
