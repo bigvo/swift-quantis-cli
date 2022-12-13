@@ -249,7 +249,7 @@ public final class QuantisFunctions {
         let size = MemoryLayout<Int32>.size * count
         
         // Allocate memory for the requested amount of Int32
-        let pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: MemoryLayout<Int32>.size)
+        let pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: MemoryLayout<Int32>.alignment)
         
         let deviceHandle = QuantisRead(device, deviceNumber, pointer, size)
         
@@ -257,7 +257,7 @@ public final class QuantisFunctions {
             pointer.deallocate()
         }
         
-        if deviceHandle != 0 {
+        if deviceHandle < 0 {
             throw QuantisError.deviceError
         }
         
