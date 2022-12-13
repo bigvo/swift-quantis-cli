@@ -16,7 +16,7 @@ Compile providing required flag to Swift Linker: swift build -Xlinker -lusb-1.0
   --jackpot               Roll a jackpot, receive result from 0.00 to 100.00.
   --coinflip              Flip a coin, result: 1 or 2.
   --wheel                 Roll a wheel, result from 1.00 to 25.99
-  --randomint             Random number, from -min to -max, if no value provided, default: 1 to 10 will be used
+  --randomint             Random number, from -min to -max, if no value provided, default: 1 to 10 will be used, -c <amount> amount of numbers to be generated
   --randomdouble          Random double, from -min to -max, if no value provided, default: 1.00 to 10.00 will be used
   --min <min>             From minimal number
   --max <max>             To maximum number
@@ -31,4 +31,5 @@ Compile providing required flag to Swift Linker: swift build -Xlinker -lusb-1.0
 --jackpot
 --coinflip -t 1 -n 1
 --randomint --min 1 --max 100
+--randomint --min -1000 --max 2000 -c 100000
 ```
