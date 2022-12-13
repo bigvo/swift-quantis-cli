@@ -97,11 +97,11 @@ public final class QuantisFunctions {
     public func roll() throws -> Int32 {
         let min: Int32 = 1
         let max: Int32 = 100
-        let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: Int(max))
+        let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
         let deviceHandle = QuantisReadScaledInt(device, deviceNumber, pointer, min, max)
         
         defer {
-            pointer.deinitialize(count: Int(max))
+            pointer.deinitialize(count: 1)
             pointer.deallocate()
         }
         
@@ -122,11 +122,11 @@ public final class QuantisFunctions {
     public func jackpot() throws -> Double {
         let min: Double = 0.01
         let max: Double = 100.00
-        let pointer = UnsafeMutablePointer<Double>.allocate(capacity: Int(max))
+        let pointer = UnsafeMutablePointer<Double>.allocate(capacity: 1)
         let deviceHandle = QuantisReadScaledDouble(device, deviceNumber, pointer, min, max)
         
         defer {
-            pointer.deinitialize(count: Int(max))
+            pointer.deinitialize(count: 1)
             pointer.deallocate()
         }
         
@@ -145,11 +145,11 @@ public final class QuantisFunctions {
     public func coinflip() throws -> Int32 {
         let min: Int32 = 1
         let max: Int32 = 2
-        let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: Int(max))
+        let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
         let deviceHandle = QuantisReadScaledInt(device, deviceNumber, pointer, min, max)
         
         defer {
-            pointer.deinitialize(count: Int(max))
+            pointer.deinitialize(count: 1)
             pointer.deallocate()
         }
         
@@ -168,12 +168,12 @@ public final class QuantisFunctions {
     public func wheel() throws -> Double {
         let min: Double = 1.00
         let max: Double = 25.99
-        let pointer = UnsafeMutablePointer<Double>.allocate(capacity: Int(max))
+        let pointer = UnsafeMutablePointer<Double>.allocate(capacity: 1)
         
         let deviceHandle = QuantisReadScaledDouble(device, deviceNumber, pointer, min, max)
         
         defer {
-            pointer.deinitialize(count: Int(max))
+            pointer.deinitialize(count: 1)
             pointer.deallocate()
         }
         
@@ -190,11 +190,11 @@ public final class QuantisFunctions {
     }
     
     public func quantisReadScaledInt(min: Int32, max: Int32) throws -> Int32 {
-        let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: Int(max))
+        let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
         
         let deviceHandle = QuantisReadScaledInt(device, deviceNumber, pointer, min, max)
         defer {
-            pointer.deinitialize(count: Int(max))
+            pointer.deinitialize(count: 1)
             pointer.deallocate()
         }
         
@@ -216,11 +216,11 @@ public final class QuantisFunctions {
     }
     
     public func quantisReadScaledDouble(min: Double, max: Double) throws -> Double {
-        let pointer = UnsafeMutablePointer<Double>.allocate(capacity: Int(max))
+        let pointer = UnsafeMutablePointer<Double>.allocate(capacity: 1)
         
         let deviceHandle = QuantisReadScaledDouble(device, deviceNumber, pointer, min, max)
         defer {
-            pointer.deinitialize(count: Int(max))
+            pointer.deinitialize(count: 1)
             pointer.deallocate()
         }
         

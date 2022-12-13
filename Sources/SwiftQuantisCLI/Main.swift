@@ -117,7 +117,7 @@ struct QuantisCLI: ParsableCommand {
         
         if randomInt {
             do {
-                for _ in 1...(count ?? 1) {
+                for _ in 0..<(count ?? 1) {
                     try print(quantis.quantisReadScaledInt(
                         min: Int32(min ?? 1),
                         max: Int32(max ?? 10)))
