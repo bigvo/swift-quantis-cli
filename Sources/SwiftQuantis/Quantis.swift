@@ -239,4 +239,45 @@ public final class QuantisFunctions {
         }
         return Double(result).round(to: 2)
     }
+    
+    public func quantisReadScaledIntArray(count: Int, min: Int32, max: Int32) throws -> [Int32] {
+        if min > max {
+            throw QuantisError.invalidParameters
+        }
+        
+        // Allocate memory for the requested amount of Int32
+        let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: count)
+        
+        // Calculate size of the data to be generated
+        let size = MemoryLayout<Int32>.size * count
+        
+        let deviceHandle = QuantisRead(device, deviceNumber, pointer, size)
+        
+        defer {
+            pointer.deinitialize(count: count)
+            pointer.deallocate()
+        }
+        
+        if deviceHandle != 0 {
+            throw QuantisError.deviceError
+        }
+        
+        // TODO: Convert and scale
+        let range: Int32 = (max - min) + 1
+        var result: [Int32] = []
+        
+        for i in 0..<count {
+            // Convert value to Int32
+            let value = Int32(pointer[i])
+            // Scale in the required range
+            let scaledValue = (value % range) + min
+            result.append(scaledValue)
+        }
+        
+        guard !result.isEmpty else {
+            throw QuantisError.noResult
+        }
+        
+        return result
+    }
 }

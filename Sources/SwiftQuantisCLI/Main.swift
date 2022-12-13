@@ -141,6 +141,20 @@ struct QuantisCLI: ParsableCommand {
                 fatalError()
             }
         }
+        
+        if count != nil {
+            do {
+                try print(quantis.quantisReadScaledIntArray(count: count!,
+                    min: Int32(min ?? 1.00),
+                    max: Int32(max ?? 100.00)
+                ))
+                return
+            } catch {
+                print(error)
+                fatalError()
+            }
+        }
+        
         return quantis.printAllCards()
     }
 }
