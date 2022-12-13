@@ -117,11 +117,16 @@ struct QuantisCLI: ParsableCommand {
         
         if randomInt {
             do {
-                for _ in 0..<(count ?? 1) {
-                    try print(quantis.quantisReadScaledInt(
+                if count != nil {
+                    try print(quantis.quantisReadScaledIntArray(count: count!,
+                        min: Int32(min ?? 1.00),
+                        max: Int32(max ?? 100.00)
+                    ))
+                    return
+                }
+                try print(quantis.quantisReadScaledInt(
                         min: Int32(min ?? 1),
                         max: Int32(max ?? 10)))
-                }
                 return
             } catch {
                 print(error)
@@ -141,20 +146,6 @@ struct QuantisCLI: ParsableCommand {
                 fatalError()
             }
         }
-        
-        if count != nil {
-            do {
-                try print(quantis.quantisReadScaledIntArray(count: count!,
-                    min: Int32(min ?? 1.00),
-                    max: Int32(max ?? 100.00)
-                ))
-                return
-            } catch {
-                print(error)
-                fatalError()
-            }
-        }
-        
         return quantis.printAllCards()
     }
 }
