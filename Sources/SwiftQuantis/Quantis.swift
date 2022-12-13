@@ -269,7 +269,7 @@ public final class QuantisFunctions {
             // Convert value to Int32
             let value = pointer.load(fromByteOffset: MemoryLayout<Int32>.size * i, as: Int32.self)
             // Scale in the required range
-            let scaledValue = (value % range) + min
+            let scaledValue = (value % range + range) % range + min
             result.append(scaledValue)
         }
         
