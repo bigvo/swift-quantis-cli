@@ -245,16 +245,15 @@ public final class QuantisFunctions {
             throw QuantisError.invalidParameters
         }
         
-        // Allocate memory for the requested amount of Int32
-        let pointer = UnsafeMutablePointer<Int32>.allocate(capacity: count)
-        
         // Calculate size of the data to be generated
         let size = MemoryLayout<Int32>.size * count
+        
+        // Allocate memory for the requested amount of Int32
+        let pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: MemoryLayout<Int32>.size)
         
         let deviceHandle = QuantisRead(device, deviceNumber, pointer, size)
         
         defer {
-            pointer.deinitialize(count: count)
             pointer.deallocate()
         }
         
@@ -268,7 +267,7 @@ public final class QuantisFunctions {
         
         for i in 0..<count {
             // Convert value to Int32
-            let value = Int32(pointer[i])
+            let value = pointer.load(fromByteOffset: MemoryLayout<Int32>.size * i, as: Int32.self)
             // Scale in the required range
             let scaledValue = (value % range) + min
             result.append(scaledValue)
