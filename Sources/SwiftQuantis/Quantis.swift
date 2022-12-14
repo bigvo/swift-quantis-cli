@@ -292,7 +292,7 @@ public final class QuantisFunctions {
         }
         
         // Allocate memory for the requested amount of Int32
-        let pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: MemoryLayout<String>.alignment)
+        let pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: MemoryLayout<Data>.alignment)
         
         let deviceHandle = QuantisRead(device, deviceNumber, pointer, size)
         
@@ -307,7 +307,6 @@ public final class QuantisFunctions {
         var result: [String] = []
         
         for i in 0..<count {
-            // Convert value to Int32
             let value = pointer.load(fromByteOffset: length * i, as: Data.self)
             let hexadecimalString = value.hexadecimalString
             result.append(hexadecimalString)
