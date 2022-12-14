@@ -292,7 +292,7 @@ public final class QuantisFunctions {
         }
         
         // Allocate memory for the requested amount of Int32
-        let pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: MemoryLayout<Data>.alignment)
+        let pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: MemoryLayout<String>.alignment)
         
         let deviceHandle = QuantisRead(device, deviceNumber, pointer, size)
         
