@@ -42,15 +42,21 @@ struct QuantisCLI: ParsableCommand {
     
     @Flag(name: [.customLong("randomint")], help:
             """
-            Random number, from -min to -max, if no value provided, default: 1 to 10 will be used
+            Random number, from --min to --max, if no value provided, default: 1 to 10 will be used, -c <amount> of numbers to generate
             """)
     var randomInt: Bool = false
     
     @Flag(name: [.customLong("randomdouble")], help:
             """
-            Random double, from -min to -max, if no value provided, default: 1.00 to 10.00 will be used
+            Random double, from --min to --max, if no value provided, default: 1.00 to 10.00 will be used
             """)
     var randomDouble: Bool = false
+    
+    @Flag(name: [.customLong("randomstring")], help:
+            """
+            Random string array, required options: -c <amount> of strings to generate -l <length> in bytes of each string
+            """)
+    var randomString: Bool = false
     
     @Option(name: .long, help: "From minimal number")
     var min: Double?
@@ -58,7 +64,7 @@ struct QuantisCLI: ParsableCommand {
     @Option(name: .long, help: "To maximum number")
     var max: Double?
     
-    @Option(name: .short, help: "How many numbers generate")
+    @Option(name: .short, help: "Amount of elements to generate")
     var count: Int?
     
     @Option(name: .short, help: "Device Type: 1 - PCI-E, 2  - USB")
@@ -66,6 +72,9 @@ struct QuantisCLI: ParsableCommand {
     
     @Option(name: .short, help: "Device Number")
     var number: UInt32?
+    
+    @Option(name: .short, help: "Length of the string in bytes")
+    var length: Int?
     
     mutating func run() throws {
         let quantis = Quantis(device: QuantisDevice(type ?? 2), deviceNumber: number ?? 0)
@@ -141,6 +150,19 @@ struct QuantisCLI: ParsableCommand {
                     max: max ?? 10.00
                 ))
                 return
+            } catch {
+                print(error)
+                fatalError()
+            }
+        }
+        
+        if randomString {
+            do {
+                if count != nil && length != nil {
+                    try print(quantis.quantisStringArray(count: count!, length: length!))
+                    return
+                }
+                return print("Missing required parameters.")
             } catch {
                 print(error)
                 fatalError()

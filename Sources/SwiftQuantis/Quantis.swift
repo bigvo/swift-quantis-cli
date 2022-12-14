@@ -248,6 +248,10 @@ public final class QuantisFunctions {
         // Calculate size of the data to be generated
         let size = MemoryLayout<Int32>.size * count
         
+        if size > 16 * 1024 * 1024 {
+            throw QuantisError.tooLargeRequest
+        }
+        
         // Allocate memory for the requested amount of Int32
         let pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: MemoryLayout<Int32>.alignment)
         
@@ -261,7 +265,6 @@ public final class QuantisFunctions {
             throw QuantisError.deviceError
         }
         
-        // TODO: Convert and scale
         let range: Int32 = (max - min) + 1
         var result: [Int32] = []
         
@@ -271,6 +274,43 @@ public final class QuantisFunctions {
             // Scale in the required range
             let scaledValue = (value % range + range) % range + min
             result.append(scaledValue)
+        }
+        
+        guard !result.isEmpty else {
+            throw QuantisError.noResult
+        }
+        
+        return result
+    }
+    
+    public func quantisStringArray(count: Int, length: Int) throws -> [String] {
+        // Calculate size of the data to be generated
+        let size = length * count
+        
+        if size > 16 * 1024 * 1024 {
+            throw QuantisError.tooLargeRequest
+        }
+        
+        // Allocate memory for the requested amount of Int32
+        let pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: MemoryLayout<Data>.alignment)
+        
+        let deviceHandle = QuantisRead(device, deviceNumber, pointer, size)
+        
+        defer {
+            pointer.deallocate()
+        }
+        
+        if deviceHandle < 0 {
+            throw QuantisError.deviceError
+        }
+
+        var result: [String] = []
+        
+        for i in 0..<count {
+            // Convert value to Int32
+            let value = pointer.load(fromByteOffset: length * i, as: Data.self)
+            let hexadecimalString = value.hexadecimalString
+            result.append(hexadecimalString)
         }
         
         guard !result.isEmpty else {

@@ -1,10 +1,3 @@
-//
-//  Models.swift
-//  
-//
-//  Created by Vladimir Young on 3/21/22.
-//
-
 import Foundation
 
 extension Double {
@@ -12,10 +5,4 @@ extension Double {
         let divisor = pow(10.0, Double(places))
         return (self * divisor).rounded() / divisor
     }
-}
-
-enum QuantisError: Error {
-    case noResult
-    case deviceError
-    case invalidParameters
 }
