@@ -285,37 +285,22 @@ public final class QuantisFunctions {
     
     public func quantisStringArray(count: Int, length: Int) throws -> [String] {
         // Calculate size of the data to be generated
-        let size = length * count
+        let size = count * length
+        // Allocate and initialize data with zero
+        var buffer = Data(count: size)
         
-        if size > 16 * 1024 * 1024 {
+        if buffer.count > 16 * 1024 * 1024 {
             throw QuantisError.tooLargeRequest
         }
         
-        // Allocate memory for the requested amount of Int32
-        let pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: MemoryLayout<Data>.alignment)
-        
-        let deviceHandle = QuantisRead(device, deviceNumber, pointer, size)
-        
-        defer {
-            pointer.deallocate()
+        let _ = buffer.withUnsafeMutableBytes {
+            QuantisRead(device, deviceNumber, $0.baseAddress!, size)
         }
         
-        if deviceHandle < 0 {
-            throw QuantisError.deviceError
+        let hexadecimalStrings = (0..<count).map { i in
+            let subdata = buffer.subdata(in: i * length..<(i + 1) * length)
+            return subdata.map { String(format: "%02x", $0) }.joined()
         }
-
-        var result: [String] = []
-        
-        for i in 0..<count {
-            let value = pointer.load(fromByteOffset: length * i, as: Data.self)
-            let hexadecimalString = value.hexadecimalString
-            result.append(hexadecimalString)
-        }
-        
-        guard !result.isEmpty else {
-            throw QuantisError.noResult
-        }
-        
-        return result
+        return hexadecimalStrings
     }
 }
