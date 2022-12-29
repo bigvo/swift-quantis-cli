@@ -16,8 +16,8 @@ public typealias Quantis = QuantisFunctions
 public typealias QuantisDevice = QuantisDeviceType
 
 public final class QuantisFunctions {
-    private var device: QuantisDevice
-    private var deviceNumber: UInt32
+    public var device: QuantisDevice
+    public var deviceNumber: UInt32
 
     public init(device: QuantisDevice, deviceNumber: UInt32) {
         self.device = device
