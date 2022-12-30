@@ -180,6 +180,7 @@ struct QuantisCLI: ParsableCommand {
                     }
                 return
             }
+            return print("Please provide -c <count>")
         }
         return quantis.printAllCards()
     }
