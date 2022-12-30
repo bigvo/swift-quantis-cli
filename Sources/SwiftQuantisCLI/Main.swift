@@ -76,6 +76,10 @@ struct QuantisCLI: ParsableCommand {
     @Option(name: .short, help: "Length of the string in bytes")
     var length: Int?
     
+    // TODO: DELETE ME
+    @Flag(name: .short, help: "Test conformance to RandomNumberGenerator")
+    var test: Bool = false
+    
     mutating func run() throws {
         let quantis = Quantis(device: QuantisDevice(type ?? 2), deviceNumber: number ?? 0)
         
@@ -166,6 +170,15 @@ struct QuantisCLI: ParsableCommand {
             } catch {
                 print(error)
                 fatalError()
+            }
+        }
+        
+        if test {
+            if count != nil {
+                for _ in 0..<count! {
+                    print(quantis.next())
+                    }
+                return
             }
         }
         return quantis.printAllCards()

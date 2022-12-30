@@ -15,7 +15,7 @@ public typealias Quantis = QuantisFunctions
 
 public typealias QuantisDevice = QuantisDeviceType
 
-public final class QuantisFunctions {
+public final class QuantisFunctions: RandomNumberGenerator {
     public var device: QuantisDevice
     public var deviceNumber: UInt32
 
@@ -302,5 +302,28 @@ public final class QuantisFunctions {
             return subdata.map { String(format: "%02x", $0) }.joined()
         }
         return hexadecimalStrings
+    }
+    
+    public func next() -> UInt64 {
+        // Calculate size of the data to be generated
+        let size = MemoryLayout<UInt64>.size
+        
+        // Allocate memory for the requested amount of Int32
+        let pointer = UnsafeMutableRawPointer.allocate(byteCount: size, alignment: MemoryLayout<UInt64>.alignment)
+        
+        // Deallocate when function returns
+        defer {
+            pointer.deallocate()
+        }
+        
+        let deviceHandle = QuantisRead(device, deviceNumber, pointer, size)
+        
+        if deviceHandle < 0 {
+            return 0
+        }
+        
+        let randomUInt64 = pointer.load(as: UInt64.self)
+        
+        return randomUInt64
     }
 }
