@@ -77,7 +77,7 @@ struct QuantisCLI: ParsableCommand {
     var length: Int?
     
     // TODO: DELETE ME
-    @Flag(name: .short, help: "Test conformance to RandomNumberGenerator")
+    @Flag(name: .long, help: "Test conformance to RandomNumberGenerator")
     var test: Bool = false
     
     mutating func run() throws {
