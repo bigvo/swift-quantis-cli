@@ -76,6 +76,9 @@ struct QuantisCLI: ParsableCommand {
     @Option(name: .short, help: "Length of the string in bytes")
     var length: Int?
     
+    @Option(name: [.short, .long], help: "Generate random binary data")
+    var binary: Int?
+    
     // TODO: DELETE ME
     @Flag(name: .long, help: "Test conformance to RandomNumberGenerator")
     var test: Bool = false
@@ -179,6 +182,11 @@ struct QuantisCLI: ParsableCommand {
                     print(quantis.next())
                     }
                 return
+            }
+            
+            if binary != nil {
+                let data = try quantis.quantisRead(bytes: binary!)
+                return print("BINARY: \(data.base64EncodedString())")
             }
             return print("Please provide -c <count>")
         }
