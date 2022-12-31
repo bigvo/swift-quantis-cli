@@ -11,11 +11,37 @@
 import Foundation
 import СQuantis
 
+public protocol SwiftQuantis {
+    // MARK: Detect and return amount of devices in system
+    func quantisCount() -> Int32
+    
+    // MARK: Print information about devices
+    func printAllCards() -> Void
+    
+    // MARK: Read and scale Int in min to max range
+    func quantisReadScaledInt(min: Int32, max: Int32) throws -> Int32
+    
+    // MARK: Read and scale Double in min to max range
+    func quantisReadScaledDouble(min: Double, max: Double) throws -> Double
+    
+    // MARK: Read and scale array of Int in min to max range
+    func quantisReadScaledIntArray(count: Int, min: Int32, max: Int32) throws -> [Int32]
+    
+    // MARK: Read array of String in required byte length
+    func quantisStringArray(count: Int, length: Int) throws -> [String]
+    
+    // MARK: Read random binary in request byte size
+    func quantisRead(bytes: Int) throws -> Data
+    
+    // MARK: Generate random UInt64 as per RandomNumberGenerator type
+    func next() -> UInt64
+}
+
 public typealias Quantis = QuantisFunctions
 
 public typealias QuantisDevice = QuantisDeviceType
 
-public final class QuantisFunctions: RandomNumberGenerator {
+public final class QuantisFunctions: RandomNumberGenerator, SwiftQuantis {
     public var device: QuantisDevice
     public var deviceNumber: UInt32
 
@@ -302,6 +328,19 @@ public final class QuantisFunctions: RandomNumberGenerator {
             return subdata.map { String(format: "%02x", $0) }.joined()
         }
         return hexadecimalStrings
+    }
+    
+    public func quantisRead(bytes: Int) throws -> Data {
+        var buffer = Data(count: bytes)
+        
+        if buffer.count > 16 * 1024 * 1024 {
+            throw QuantisError.tooLargeRequest
+        }
+        
+        let _ = buffer.withUnsafeMutableBytes {
+            QuantisRead(device, deviceNumber, $0.baseAddress!, bytes)
+        }
+        return buffer
     }
     
     public func next() -> UInt64 {
