@@ -14,6 +14,9 @@ struct QuantisCLI: ParsableCommand {
     @Flag(name: [.short, .long], help: "Print all cards info")
     var info: Bool = false
     
+    @Flag(name: [.short, .long], help: "Print device info")
+    var deviceInfo: Bool = false
+    
     @Flag(name: [.customLong("roll")], help:
             """
             Roll from 1 to 100, like in WoW.
@@ -88,6 +91,13 @@ struct QuantisCLI: ParsableCommand {
         
         if info {
             quantis.printAllCards()
+            return
+        }
+        
+        if deviceInfo {
+            print("\nManufacturer: \(quantis.getDeviceInfo().manufacturer)\n")
+            print("Core version: \(quantis.getDeviceInfo().boardVersion)\n")
+            print("Serial number: \(quantis.getDeviceInfo().serialNumber)\n")
             return
         }
         
