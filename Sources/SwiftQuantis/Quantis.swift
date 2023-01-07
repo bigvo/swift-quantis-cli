@@ -55,6 +55,14 @@ public final class QuantisFunctions: RandomNumberGenerator, SwiftQuantis {
         return count
     }
     
+    public func getDeviceInfo() -> (boardVersion: Int32, serialNumber: String, manufacturer: String) {
+        let boardVersion = QuantisGetBoardVersion(device, deviceNumber)
+        let serialNumber = String(cString: (QuantisGetSerialNumber(device, deviceNumber)))
+        let manufacturer = String(cString: (QuantisGetManufacturer(device, deviceNumber)))
+        
+        return (boardVersion, serialNumber, manufacturer)
+    }
+    
     public func printAllCards() {
         
         func printInfo(device: UInt32) {
